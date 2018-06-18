@@ -15,9 +15,8 @@ class Board {
     };
   }
 
-
-  //rows: height, cols: width
-  make2DBoard(rows, cols) {
+  //cols: width, rows: height
+  make2DBoard(cols, rows) {
     var arr = new Array(rows);
 
     for (let i = 0; i < arr.length; i++) {
