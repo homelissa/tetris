@@ -9,6 +9,8 @@ class Game {
     this.clearedRows = 0;
     this.score = 0;
     this.gameOver = false;
+    this.dropCounter = 0;
+    this.dropInterval = 1000;
   }
 
   clear() {
@@ -18,6 +20,32 @@ class Game {
   clearRows() {
 
   }
+
+  fall() {
+    this.piece.position.y++;
+  }
+
+  update(timeElapsed) {
+    this.dropCounter += timeElapsed;
+    if (this.dropCounter > this.dropInterval) {
+      this.fall();
+      this.dropCounter = 0;
+    }
+  }
+
+  draw(piece) {
+    piece.forEach(row => {
+      row.forEach(value => {
+        if (value !== 0) {
+          ctx.beginPath();
+          ctx.rect(this.piece.position.x, this.piece.position.y, w, h);
+          ctx.fill();
+        }
+      });
+    });
+  }
+
+
 
 }
 

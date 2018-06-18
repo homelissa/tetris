@@ -46,12 +46,14 @@ class Piece {
     this.position = { x: 0, y: 0 };
     this.shape = null;
     this.makePiece();
+
   }
 
   makePiece() {
     const shapesArray = ['LShape', 'lShape', 'JShape', 'OShape', 'ZShape', 'SShape', 'TShape'];
     this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
   }
+
 
 }
 
