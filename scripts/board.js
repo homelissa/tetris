@@ -1,5 +1,7 @@
-var c = document.getElementById('canvas');
-var ctx = c.getContext('2d');
+window.addEventListener("DOMContentLoaded", () => {
+  var c = document.getElementById('canvas');
+  var ctx = c.getContext('2d');
+});
 
 class Board {
   constructor(width, height) {
@@ -27,7 +29,7 @@ class Board {
   }
 
   merge(pieces) {
-    
+
   }
 
 

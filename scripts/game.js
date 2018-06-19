@@ -45,7 +45,7 @@ class Game {
 
 
   fall() {
-    this.piece.position.y++;
+    this.piece.position.y += 10;
   }
 
   update(timeElapsed) {
@@ -56,16 +56,22 @@ class Game {
     }
   }
 
-  draw(piece) {
-    piece.forEach(row => {
+  draw(ctx, piece) {
+    let x = 0;
+    let y = 0;
+
+    piece.shape.forEach(row => {
       row.forEach(value => {
         if (value !== 0) {
           ctx.beginPath();
-          ctx.rect(this.piece.position.x, this.piece.position.y, 3, 4);
+          ctx.rect(piece.position.x + x, piece.position.y + y, 4, 5);
           ctx.fillStyle = 'blue';
           ctx.fill();
         }
+    x += 4;
       });
+    y += 5;
+    x = 0;
     });
   }
 

@@ -1,6 +1,7 @@
 import Board from './board.js';
 import Game from './game.js';
-import Piece from '.piece.js';
+import Piece from './piece.js';
+import Player from './player.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,8 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
 
   const board = new Board(10, 20);
-  const Player = new Player(board);
+  const player = new Player(board);
+  const game = new Game();
 
+  game.draw(ctx, game.piece);
+  game.fall();
+  game.draw(ctx, game.piece);
 });
 
 

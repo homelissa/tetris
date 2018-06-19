@@ -50,7 +50,7 @@ class Piece {
   }
 
   makePiece() {
-    const shapesArray = ['LShape', 'lShape', 'JShape', 'OShape', 'ZShape', 'SShape', 'TShape'];
+    const shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
     this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
   }
 
