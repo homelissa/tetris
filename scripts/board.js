@@ -28,9 +28,7 @@ class Board {
     return arr;
   }
 
-  merge(pieces) {
 
-  }
 
 
 }

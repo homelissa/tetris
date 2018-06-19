@@ -139,9 +139,6 @@ var Board = function () {
 
       return arr;
     }
-  }, {
-    key: 'merge',
-    value: function merge(pieces) {}
   }]);
 
   return Board;
@@ -184,15 +181,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Game = function () {
-  function Game() {
+  function Game(ctx) {
     _classCallCheck(this, Game);
 
+    this.ctx = ctx;
     this.board = new _board2.default(10, 20);
     this.piece = new _piece2.default();
     this.nextPiece = new _piece2.default();
     this.gameOver = false;
     this.dropCounter = 0;
     this.dropInterval = 1000;
+    this.lastTime = 0;
+    this.update = this.update.bind(this);
+    this.draw = this.draw.bind(this);
+    this.interval = setInterval(this.update, 1000);
+    this.fall = this.fall.bind(this);
   }
 
   _createClass(Game, [{
@@ -235,36 +238,71 @@ var Game = function () {
     key: 'fall',
     value: function fall() {
       this.piece.position.y += 10;
+      this.dropCounter = 0;
     }
+
+    // update(timeElapsed) {
+    //   this.dropCounter += timeElapsed;
+    //   if (this.dropCounter > this.dropInterval) {
+    //     this.draw();
+    //     this.fall();
+    //     this.dropCounter = 0;
+    //     this.draw();
+    //   }
+    // }
+
+
   }, {
     key: 'update',
-    value: function update(timeElapsed) {
-      this.dropCounter += timeElapsed;
+    value: function update() {
+      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+      var deltaTime = time - this.lastTime;
+      this.lastTime = time;
+      this.dropCounter += deltaTime;
+
       if (this.dropCounter > this.dropInterval) {
         this.fall();
-        this.dropCounter = 0;
       }
+
+      this.draw();
+      requestAnimationFrame(this.update);
     }
   }, {
     key: 'draw',
-    value: function draw(ctx, piece) {
-      var x = 0;
-      var y = 0;
+    value: function draw() {
+      var _this = this;
 
-      piece.shape.forEach(function (row) {
-        row.forEach(function (value) {
+      this.piece.shape.forEach(function (row, idx) {
+        row.forEach(function (value, idx2) {
           if (value !== 0) {
-            ctx.beginPath();
-            ctx.rect(piece.position.x + x, piece.position.y + y, 4, 5);
-            ctx.fillStyle = 'blue';
-            ctx.fill();
+            _this.ctx.fillStyle = 'blue';
+            _this.ctx.fillRect(idx2 + _this.piece.position.x, idx + _this.piece.position.y, 1, 1);
           }
-          x += 4;
         });
-        y += 5;
-        x = 0;
       });
     }
+
+    // draw(ctx, piece) {
+    //   let x = 0;
+    //   let y = 0;
+    //
+    //   piece.shape.forEach(row => {
+    //     row.forEach(value => {
+    //       if (value !== 0) {
+    //         ctx.beginPath();
+    //         ctx.rect(piece.position.x + x, piece.position.y + y, 4, 5);
+    //         ctx.fillStyle = 'blue';
+    //         ctx.fill();
+    //       }
+    //   x += 4;
+    //     });
+    //   y += 5;
+    //   x = 0;
+    //   });
+    //
+    // }
+
   }, {
     key: 'makeNewPiece',
     value: function makeNewPiece() {
@@ -281,6 +319,20 @@ var Game = function () {
   }, {
     key: 'collide',
     value: function collide() {}
+  }, {
+    key: 'merge',
+    value: function merge() {
+      var _this2 = this;
+
+      this.piece.shape.forEach(function (row, y) {
+        row.forEach(function (value, x) {
+          if (value !== 0) {
+            _player2.default.clearedRows += 1;
+            _this2.board.matrix[y + _this2.piece.pos.y - 1][x + _this2.piece.pos.x] = value;
+          }
+        });
+      });
+    }
   }]);
 
   return Game;
@@ -336,6 +388,7 @@ var Piece = function () {
     value: function makePiece() {
       var shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
       this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
+      this.position.x = Math.floor(24 - this.shape[0].length / 2);
     }
   }]);
 
@@ -419,19 +472,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
+  ctx.scale(2, 2);
 
   var board = new _board2.default(10, 20);
   var player = new _player2.default(board);
-  var game = new _game2.default();
+  // const game = new Game();
+  var game = new _game2.default(ctx);
 
-  game.draw(ctx, game.piece);
-  game.fall();
-  game.draw(ctx, game.piece);
+  // game.draw(ctx, game.piece);
+  // game.fall();
+  // game.draw(ctx, game.piece);
+
+  game.update();
 });
 
 function startGame() {
   var game = document.getElementById('start-game');
-  // song.play();
+  game.update();
 }
 
 /***/ })

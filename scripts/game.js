@@ -3,13 +3,19 @@ import Piece from './piece.js';
 import Player from './player.js';
 
 class Game {
-  constructor(){
+  constructor(ctx){
+    this.ctx = ctx;
     this.board = new Board(10, 20);
     this.piece = new Piece();
     this.nextPiece = new Piece();
     this.gameOver = false;
     this.dropCounter = 0;
     this.dropInterval = 1000;
+    this.lastTime = 0;
+    this.update = this.update.bind(this);
+    this.draw = this.draw.bind(this);
+    this.interval = setInterval(this.update, 1000);
+    this.fall = this.fall.bind(this);
   }
 
   clear() {
@@ -46,34 +52,72 @@ class Game {
 
   fall() {
     this.piece.position.y += 10;
+    this.dropCounter = 0;
   }
 
-  update(timeElapsed) {
-    this.dropCounter += timeElapsed;
+  // update(timeElapsed) {
+  //   this.dropCounter += timeElapsed;
+  //   if (this.dropCounter > this.dropInterval) {
+  //     this.draw();
+  //     this.fall();
+  //     this.dropCounter = 0;
+  //     this.draw();
+  //   }
+  // }
+
+
+
+
+  update(time = 0) {
+    const deltaTime = time - this.lastTime;
+    this.lastTime = time;
+    this.dropCounter += deltaTime;
+
     if (this.dropCounter > this.dropInterval) {
       this.fall();
-      this.dropCounter = 0;
     }
+
+    this.draw();
+    requestAnimationFrame(this.update);
+
   }
 
-  draw(ctx, piece) {
-    let x = 0;
-    let y = 0;
 
-    piece.shape.forEach(row => {
-      row.forEach(value => {
+
+  draw() {
+
+    this.piece.shape.forEach((row, idx) => {
+      row.forEach((value, idx2) => {
         if (value !== 0) {
-          ctx.beginPath();
-          ctx.rect(piece.position.x + x, piece.position.y + y, 4, 5);
-          ctx.fillStyle = 'blue';
-          ctx.fill();
+          this.ctx.fillStyle = 'blue';
+          this.ctx.fillRect(idx2 + this.piece.position.x, idx + this.piece.position.y, 1, 1);
         }
-    x += 4;
       });
-    y += 5;
-    x = 0;
     });
   }
+
+
+
+
+  // draw(ctx, piece) {
+  //   let x = 0;
+  //   let y = 0;
+  //
+  //   piece.shape.forEach(row => {
+  //     row.forEach(value => {
+  //       if (value !== 0) {
+  //         ctx.beginPath();
+  //         ctx.rect(piece.position.x + x, piece.position.y + y, 4, 5);
+  //         ctx.fillStyle = 'blue';
+  //         ctx.fill();
+  //       }
+  //   x += 4;
+  //     });
+  //   y += 5;
+  //   x = 0;
+  //   });
+  //
+  // }
 
   makeNewPiece() {
     if (this.piece.pos.y < 1) {
@@ -90,6 +134,17 @@ class Game {
 
   collide() {
 
+  }
+
+  merge() {
+    this.piece.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0) {
+          Player.clearedRows += 1;
+          this.board.matrix[y + this.piece.pos.y - 1][x + this.piece.pos.x] = value;
+        }
+      });
+    });
   }
 
 
