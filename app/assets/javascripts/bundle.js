@@ -116,13 +116,6 @@ var Board = function () {
     this.width = width;
     this.height = height;
     this.matrix = this.make2DBoard(width, height);
-
-    // this.draw = function() {
-    //   ctx.beginPath();
-    //   ctx.strokeStyle='red';
-    //   ctx.rect(20, 20, this.width, this.height);
-    //   ctx.stroke();
-    // };
   }
 
   //cols: width, rows: height
@@ -181,11 +174,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Game = function () {
-  function Game(ctx) {
+  function Game(canvas, ctx, player) {
     _classCallCheck(this, Game);
 
+    this.canvas = canvas;
     this.ctx = ctx;
-    this.board = new _board2.default(10, 20);
+    this.player = player;
+    this.board = player.board;
     this.piece = new _piece2.default();
     this.nextPiece = new _piece2.default();
     this.gameOver = false;
@@ -194,11 +189,16 @@ var Game = function () {
     this.lastTime = 0;
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
-    this.interval = setInterval(this.update, 1000);
     this.fall = this.fall.bind(this);
   }
 
   _createClass(Game, [{
+    key: 'start',
+    value: function start() {
+      this.player.score = 0;
+      this.update();
+    }
+  }, {
     key: 'clear',
     value: function clear() {
       this.board.matrix.forEach(function (row) {
@@ -240,18 +240,6 @@ var Game = function () {
       this.piece.position.y += 10;
       this.dropCounter = 0;
     }
-
-    // update(timeElapsed) {
-    //   this.dropCounter += timeElapsed;
-    //   if (this.dropCounter > this.dropInterval) {
-    //     this.draw();
-    //     this.fall();
-    //     this.dropCounter = 0;
-    //     this.draw();
-    //   }
-    // }
-
-
   }, {
     key: 'update',
     value: function update() {
@@ -273,11 +261,31 @@ var Game = function () {
     value: function draw() {
       var _this = this;
 
+      this.board.matrix.forEach(function (row, idx) {
+        row.forEach(function (element, idx2) {
+          if (element === 0) {
+            _this.ctx.fillStyle = 'rgb(36, 36, 36)';
+          } else {
+            _this.ctx.fillStyle = 'green';
+          }
+          _this.ctx.fillRect(idx2, idx, 1, 1);
+        });
+      });
+
       this.piece.shape.forEach(function (row, idx) {
         row.forEach(function (value, idx2) {
           if (value !== 0) {
             _this.ctx.fillStyle = 'blue';
             _this.ctx.fillRect(idx2 + _this.piece.position.x, idx + _this.piece.position.y, 1, 1);
+          }
+        });
+      });
+
+      this.nextPiece.shape.forEach(function (row, idx) {
+        row.forEach(function (value, idx2) {
+          if (value !== 0) {
+            _this.ctx.fillStyle = 'blue';
+            _this.ctx.fillRect(idx2 + _this.nextPiece.position.x, idx + _this.nextPiece.position.y, 1, 1);
           }
         });
       });
@@ -476,19 +484,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var board = new _board2.default(10, 20);
   var player = new _player2.default(board);
-  // const game = new Game();
-  var game = new _game2.default(ctx);
-
-  // game.draw(ctx, game.piece);
-  // game.fall();
-  // game.draw(ctx, game.piece);
-
-  game.update();
+  var game = new _game2.default(canvas, ctx, player);
+  game.start();
 });
 
 function startGame() {
   var game = document.getElementById('start-game');
-  game.update();
+  game.start();
 }
 
 /***/ })

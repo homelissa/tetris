@@ -11,19 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const board = new Board(10, 20);
   const player = new Player(board);
-  // const game = new Game();
-  const game = new Game(ctx);
+  const game = new Game(canvas, ctx, player);
+  game.start();
 
-
-  // game.draw(ctx, game.piece);
-  // game.fall();
-  // game.draw(ctx, game.piece);
-
-  game.update();
 });
 
 
 function startGame() {
   const game = document.getElementById('start-game');
-  game.update();
+  game.start();
 }

@@ -8,13 +8,6 @@ class Board {
     this.width = width;
     this.height = height;
     this.matrix = this.make2DBoard(width, height);
-
-    // this.draw = function() {
-    //   ctx.beginPath();
-    //   ctx.strokeStyle='red';
-    //   ctx.rect(20, 20, this.width, this.height);
-    //   ctx.stroke();
-    // };
   }
 
   //cols: width, rows: height
@@ -27,9 +20,6 @@ class Board {
 
     return arr;
   }
-
-
-
 
 }
 

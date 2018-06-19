@@ -3,9 +3,11 @@ import Piece from './piece.js';
 import Player from './player.js';
 
 class Game {
-  constructor(ctx){
+  constructor(canvas, ctx, player){
+    this.canvas = canvas;
     this.ctx = ctx;
-    this.board = new Board(10, 20);
+    this.player = player;
+    this.board = player.board;
     this.piece = new Piece();
     this.nextPiece = new Piece();
     this.gameOver = false;
@@ -14,8 +16,13 @@ class Game {
     this.lastTime = 0;
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
-    this.interval = setInterval(this.update, 1000);
     this.fall = this.fall.bind(this);
+  }
+
+  start() {
+    this.player.score = 0;
+    this.update();
+
   }
 
   clear() {
@@ -55,15 +62,6 @@ class Game {
     this.dropCounter = 0;
   }
 
-  // update(timeElapsed) {
-  //   this.dropCounter += timeElapsed;
-  //   if (this.dropCounter > this.dropInterval) {
-  //     this.draw();
-  //     this.fall();
-  //     this.dropCounter = 0;
-  //     this.draw();
-  //   }
-  // }
 
 
 
@@ -86,11 +84,34 @@ class Game {
 
   draw() {
 
+
+    this.board.matrix.forEach((row, idx) => {
+      row.forEach((element, idx2) => {
+        if (element === 0) {
+          this.ctx.fillStyle = 'rgb(36, 36, 36)';
+        } else {
+          this.ctx.fillStyle = 'green';
+        }
+        this.ctx.fillRect(idx2, idx, 1, 1);
+      });
+    });
+
+
     this.piece.shape.forEach((row, idx) => {
       row.forEach((value, idx2) => {
         if (value !== 0) {
           this.ctx.fillStyle = 'blue';
           this.ctx.fillRect(idx2 + this.piece.position.x, idx + this.piece.position.y, 1, 1);
+        }
+      });
+    });
+
+
+    this.nextPiece.shape.forEach((row, idx) => {
+      row.forEach((value, idx2) => {
+        if (value !== 0) {
+          this.ctx.fillStyle = 'blue';
+          this.ctx.fillRect(idx2 + this.nextPiece.position.x, idx + this.nextPiece.position.y, 1, 1);
         }
       });
     });
