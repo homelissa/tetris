@@ -1,13 +1,12 @@
 import Board from './board.js';
 import Piece from './piece.js';
+import Player from './player.js';
 
 class Game {
   constructor(){
     this.board = new Board(10, 20);
     this.piece = new Piece();
     this.nextPiece = new Piece();
-    this.clearedRows = 0;
-    this.score = 0;
     this.gameOver = false;
     this.dropCounter = 0;
     this.dropInterval = 1000;
@@ -26,8 +25,8 @@ class Game {
           break;
         }
 
-        this.clearedRows += 1;
-        this.score += 10;
+        Player.clearedRows += 1;
+        Player.score += 10;
         this.removeRow(this.board.matrix, i);
         this.addNewRow();
       }
@@ -62,7 +61,8 @@ class Game {
       row.forEach(value => {
         if (value !== 0) {
           ctx.beginPath();
-          ctx.rect(this.piece.position.x, this.piece.position.y, w, h);
+          ctx.rect(this.piece.position.x, this.piece.position.y, 3, 4);
+          ctx.fillStyle = 'blue';
           ctx.fill();
         }
       });
@@ -76,6 +76,14 @@ class Game {
       this.piece = this.nextPiece;
       this.nextPiece = new Piece();
     }
+  }
+
+  rotatePiece() {
+
+  }
+
+  collide() {
+
   }
 
 
