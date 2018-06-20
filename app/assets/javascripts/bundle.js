@@ -111,6 +111,7 @@ var Board = function () {
     this.width = width;
     this.height = height;
     this.matrix = this.make2DBoard(width / 2, height / 2);
+    // this.matrix = this.make2DBoard(this.width, this.height);
   }
 
   //cols: width, rows: height
@@ -257,6 +258,17 @@ var Game = function () {
       }
     }
   }, {
+    key: 'fullFall',
+    value: function fullFall() {
+      while (!this.collide()) {
+        this.piece.position.y++;
+      }
+
+      this.merge();
+      this.clearRows();
+      this.makeNewPiece();
+    }
+  }, {
     key: 'update',
     value: function update() {
       var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -322,7 +334,7 @@ var Game = function () {
     key: 'move',
     value: function move(dir) {
       this.piece.position.x += dir;
-      if (this.board.collide()) {
+      if (this.collide()) {
         this.piece.position.x -= dir;
       }
     }
@@ -389,26 +401,6 @@ var Game = function () {
     //        });
     //      }
 
-
-    // draw(ctx, piece) {
-    //   let x = 0;
-    //   let y = 0;
-    //
-    //   piece.shape.forEach(row => {
-    //     row.forEach(value => {
-    //       if (value !== 0) {
-    //         ctx.beginPath();
-    //         ctx.rect(piece.position.x + x, piece.position.y + y, 4, 5);
-    //         ctx.fillStyle = 'blue';
-    //         ctx.fill();
-    //       }
-    //   x += 4;
-    //     });
-    //   y += 5;
-    //   x = 0;
-    //   });
-    //
-    // }
 
   }, {
     key: 'makeNewPiece',
@@ -562,7 +554,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  // ctx.scale(12, 20);
+
+  // const board = document.getElementById('canvas');
+  // board.width = 100;
+  // board.height = 180;
+  // const ctx = board.getContext('2d');
+  // ctx.scale(10, 10);
+
+
   ctx.scale(2, 2);
   // const board = new Board(12, 20);
   // const board = new Board(10, 20);
@@ -586,6 +585,9 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
       case "ArrowRight":
         game.move(1);
+        break;
+      case "Space":
+        game.fullFall();
         break;
     }
   });

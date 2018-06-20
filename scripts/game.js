@@ -77,6 +77,17 @@ class Game {
     }
   }
 
+  fullFall() {
+    while (!this.collide()) {
+      this.piece.position.y++;
+
+    }
+
+    this.merge();
+    this.clearRows();
+    this.makeNewPiece();
+  }
+
 
 
 
@@ -138,7 +149,7 @@ class Game {
  }
   move(dir) {
     this.piece.position.x += dir;
-    if (this.board.collide()) {
+    if (this.collide()) {
       this.piece.position.x -= dir;
     }
   }
@@ -210,25 +221,7 @@ class Game {
 
 
 
-  // draw(ctx, piece) {
-  //   let x = 0;
-  //   let y = 0;
-  //
-  //   piece.shape.forEach(row => {
-  //     row.forEach(value => {
-  //       if (value !== 0) {
-  //         ctx.beginPath();
-  //         ctx.rect(piece.position.x + x, piece.position.y + y, 4, 5);
-  //         ctx.fillStyle = 'blue';
-  //         ctx.fill();
-  //       }
-  //   x += 4;
-  //     });
-  //   y += 5;
-  //   x = 0;
-  //   });
-  //
-  // }
+
 
   makeNewPiece() {
     if (this.piece.position.y <= 1) {

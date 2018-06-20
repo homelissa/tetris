@@ -3,6 +3,7 @@ class Board {
     this.width = width;
     this.height = height;
     this.matrix = this.make2DBoard(width/2, height/2);
+    // this.matrix = this.make2DBoard(this.width, this.height);
   }
 
   //cols: width, rows: height
