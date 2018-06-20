@@ -33,14 +33,10 @@ class Game {
   clearRows() {
     for (var i = 0; i < this.board.matrix.length; i++) {
       let row = this.board.matrix[i];
-      for (var j = 0; j < row.length; j++) {
-        if (row[j] === 0) {
-          break;
-        }
 
-        Player.clearedRows += 1;
-        Player.score += 10;
-        this.removeRow(this.board.matrix, i);
+      if (row.filter((el) => el === 0).length === 0) {
+        this.player.clearedRows += 1;
+        this.board.matrix.splice(i, 1);
         this.addNewRow();
       }
     }
@@ -58,8 +54,17 @@ class Game {
 
 
   fall() {
-    this.piece.position.y += 10;
-    this.dropCounter = 0;
+
+    while (!this.collide()) {
+      this.piece.position.y += 1;
+      this.dropCounter = 0;
+    }
+
+    if (this.collide()) {
+      this.merge(this.piece);
+      this.clearRows();
+      this.makeNewPiece();
+    }
   }
 
 
@@ -80,6 +85,53 @@ class Game {
 
   }
 
+  // collide(matrix, piece) {
+  //   if (piece.position.y > 120) return true;
+  //   console.log(piece.position);
+  //   const [m, o] = [piece.shape, piece.position];
+  //   for (let y = 0; y < m.length; ++y) {
+  //     for (let x = 0; x < m[y].length; ++x) {
+  //       if (m[y][x] !== 0 &&
+  //       (matrix[y + o.y] &&
+  //         matrix[y + o.y][x + o.x]) !== 0) {
+  //           return true;
+  //         }
+  //       }
+  //     }
+  //
+  //   return false;
+  // }
+
+  collide() {
+    const shape = this.piece.shape;
+    const space = this.piece.position;
+    for (let y = 0; y < shape.length; y++) {
+     for (let x = 0; x < shape[y].length; x++) {
+       if (shape[y][x] !== 0 && (this.board.matrix[y + space.y] && this.board.matrix[y + space.y][x + space.x]) !== 0) {
+         return true;
+       }
+     }
+   }
+   return false;
+ }
+
+
+ merge() {
+   this.piece.shape.forEach((row, y) => {
+     row.forEach((value, x) => {
+       if (value !== 0) {
+         this.player.clearedRows += 1;
+         this.board.matrix[y + this.piece.position.y - 1][x + this.piece.position.x] = value;
+       }
+     });
+   });
+ }
+  move(dir) {
+    this.piece.pos.x += dir;
+    if (this.board.collide(this.board.matrix, this.piece)) {
+      this.piece.pos.x -= dir;
+    }
+  }
 
 
   draw() {
@@ -141,7 +193,7 @@ class Game {
   // }
 
   makeNewPiece() {
-    if (this.piece.pos.y < 1) {
+    if (this.piece.position.y <= 1) {
       this.gameOver = true;
     } else {
       this.piece = this.nextPiece;
@@ -153,20 +205,7 @@ class Game {
 
   }
 
-  collide() {
 
-  }
-
-  merge() {
-    this.piece.shape.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (value !== 0) {
-          Player.clearedRows += 1;
-          this.board.matrix[y + this.piece.pos.y - 1][x + this.piece.pos.x] = value;
-        }
-      });
-    });
-  }
 
 
 

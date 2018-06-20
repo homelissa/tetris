@@ -1,8 +1,3 @@
-window.addEventListener("DOMContentLoaded", () => {
-  var c = document.getElementById('canvas');
-  var ctx = c.getContext('2d');
-});
-
 class Board {
   constructor(width, height) {
     this.width = width;

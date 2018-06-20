@@ -10,10 +10,10 @@ window.addEventListener('keydown', (event) => {
       Game.fall();
       break;
     case "ArrowLeft":
-      Game.piece.position.x--;
+      Game.move(-1);
       break;
     case "ArrowRight":
-      Game.piece.position.x++;
-
+      Game.move(1);
+      break;
   }
 });

@@ -104,11 +104,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-window.addEventListener("DOMContentLoaded", function () {
-  var c = document.getElementById('canvas');
-  var ctx = c.getContext('2d');
-});
-
 var Board = function () {
   function Board(width, height) {
     _classCallCheck(this, Board);
@@ -122,7 +117,7 @@ var Board = function () {
 
 
   _createClass(Board, [{
-    key: 'make2DBoard',
+    key: "make2DBoard",
     value: function make2DBoard(cols, rows) {
       var arr = new Array(rows);
 
@@ -210,14 +205,12 @@ var Game = function () {
     value: function clearRows() {
       for (var i = 0; i < this.board.matrix.length; i++) {
         var row = this.board.matrix[i];
-        for (var j = 0; j < row.length; j++) {
-          if (row[j] === 0) {
-            break;
-          }
 
-          _player2.default.clearedRows += 1;
-          _player2.default.score += 10;
-          this.removeRow(this.board.matrix, i);
+        if (row.filter(function (el) {
+          return el === 0;
+        }).length === 0) {
+          this.player.clearedRows += 1;
+          this.board.matrix.splice(i, 1);
           this.addNewRow();
         }
       }
@@ -237,8 +230,17 @@ var Game = function () {
   }, {
     key: 'fall',
     value: function fall() {
-      this.piece.position.y += 10;
-      this.dropCounter = 0;
+
+      while (!this.collide()) {
+        this.piece.position.y += 1;
+        this.dropCounter = 0;
+      }
+
+      if (this.collide()) {
+        this.merge(this.piece);
+        this.clearRows();
+        this.makeNewPiece();
+      }
     }
   }, {
     key: 'update',
@@ -256,27 +258,81 @@ var Game = function () {
       this.draw();
       requestAnimationFrame(this.update);
     }
+
+    // collide(matrix, piece) {
+    //   if (piece.position.y > 120) return true;
+    //   console.log(piece.position);
+    //   const [m, o] = [piece.shape, piece.position];
+    //   for (let y = 0; y < m.length; ++y) {
+    //     for (let x = 0; x < m[y].length; ++x) {
+    //       if (m[y][x] !== 0 &&
+    //       (matrix[y + o.y] &&
+    //         matrix[y + o.y][x + o.x]) !== 0) {
+    //           return true;
+    //         }
+    //       }
+    //     }
+    //
+    //   return false;
+    // }
+
+  }, {
+    key: 'collide',
+    value: function collide() {
+      var shape = this.piece.shape;
+      var space = this.piece.position;
+      for (var y = 0; y < shape.length; y++) {
+        for (var x = 0; x < shape[y].length; x++) {
+          if (shape[y][x] !== 0 && (this.board.matrix[y + space.y] && this.board.matrix[y + space.y][x + space.x]) !== 0) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+  }, {
+    key: 'merge',
+    value: function merge() {
+      var _this = this;
+
+      this.piece.shape.forEach(function (row, y) {
+        row.forEach(function (value, x) {
+          if (value !== 0) {
+            _this.player.clearedRows += 1;
+            _this.board.matrix[y + _this.piece.position.y - 1][x + _this.piece.position.x] = value;
+          }
+        });
+      });
+    }
+  }, {
+    key: 'move',
+    value: function move(dir) {
+      this.piece.pos.x += dir;
+      if (this.board.collide(this.board.matrix, this.piece)) {
+        this.piece.pos.x -= dir;
+      }
+    }
   }, {
     key: 'draw',
     value: function draw() {
-      var _this = this;
+      var _this2 = this;
 
       this.board.matrix.forEach(function (row, idx) {
         row.forEach(function (element, idx2) {
           if (element === 0) {
-            _this.ctx.fillStyle = 'rgb(36, 36, 36)';
+            _this2.ctx.fillStyle = 'rgb(36, 36, 36)';
           } else {
-            _this.ctx.fillStyle = 'green';
+            _this2.ctx.fillStyle = 'green';
           }
-          _this.ctx.fillRect(idx2, idx, 1, 1);
+          _this2.ctx.fillRect(idx2, idx, 1, 1);
         });
       });
 
       this.piece.shape.forEach(function (row, idx) {
         row.forEach(function (value, idx2) {
           if (value !== 0) {
-            _this.ctx.fillStyle = 'blue';
-            _this.ctx.fillRect(idx2 + _this.piece.position.x, idx + _this.piece.position.y, 1, 1);
+            _this2.ctx.fillStyle = 'blue';
+            _this2.ctx.fillRect(idx2 + _this2.piece.position.x, idx + _this2.piece.position.y, 1, 1);
           }
         });
       });
@@ -284,8 +340,8 @@ var Game = function () {
       this.nextPiece.shape.forEach(function (row, idx) {
         row.forEach(function (value, idx2) {
           if (value !== 0) {
-            _this.ctx.fillStyle = 'blue';
-            _this.ctx.fillRect(idx2 + _this.nextPiece.position.x, idx + _this.nextPiece.position.y, 1, 1);
+            _this2.ctx.fillStyle = 'blue';
+            _this2.ctx.fillRect(idx2 + _this2.nextPiece.position.x, idx + _this2.nextPiece.position.y, 1, 1);
           }
         });
       });
@@ -314,7 +370,7 @@ var Game = function () {
   }, {
     key: 'makeNewPiece',
     value: function makeNewPiece() {
-      if (this.piece.pos.y < 1) {
+      if (this.piece.position.y <= 1) {
         this.gameOver = true;
       } else {
         this.piece = this.nextPiece;
@@ -324,23 +380,6 @@ var Game = function () {
   }, {
     key: 'rotatePiece',
     value: function rotatePiece() {}
-  }, {
-    key: 'collide',
-    value: function collide() {}
-  }, {
-    key: 'merge',
-    value: function merge() {
-      var _this2 = this;
-
-      this.piece.shape.forEach(function (row, y) {
-        row.forEach(function (value, x) {
-          if (value !== 0) {
-            _player2.default.clearedRows += 1;
-            _this2.board.matrix[y + _this2.piece.pos.y - 1][x + _this2.piece.pos.x] = value;
-          }
-        });
-      });
-    }
   }]);
 
   return Game;
@@ -480,9 +519,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  ctx.scale(2, 2);
+  // ctx.scale(20, 20);
+  ctx.scale(3, 3);
 
-  var board = new _board2.default(10, 20);
+  // const board = new Board(12, 20);
+  // const board = new Board(10, 20);
+  var board = new _board2.default(canvas.width, canvas.height);
   var player = new _player2.default(board);
   var game = new _game2.default(canvas, ctx, player);
   game.start();
