@@ -1,10 +1,25 @@
+.frame {
+  width: 215px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  border: 2px solid grey;
+  box-shadow: 2px 2px 3px 3px #ccc;
+  text-align: center;
+  font-size: 18px;
+  font-family: Helvetica;
+  font-weight: bold;
+}
+
+
 .screen {
   display: flex;
   width: 200px;
-  margin: 15px;
-  padding: 15px;
-  border: 2px solid grey;
-  box-shadow: 2px 2px 3px 3px #ccc;
+  margin-top: 10px;
+  margin-left: 5px;
+  /* margin: 15px; */
+  /* border: 2px solid grey; */
+  /* box-shadow: 2px 2px 3px 3px #ccc; */
 }
 
 .right-half {
