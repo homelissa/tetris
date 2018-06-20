@@ -8,6 +8,13 @@ class Player {
     this.clearedRows = 0;
     this.score = 0;
   }
+
+  setScore() {
+    document.getElementById('score').innerText = this.score;
+    document.getElementById('cleared-rows').innerText = this.clearedRows;
+  }
+
+
 }
 
 export default Player;

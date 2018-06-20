@@ -12,7 +12,7 @@ class Game {
     this.nextPiece = new Piece();
     this.gameOver = false;
     this.dropCounter = 0;
-    this.dropInterval = 3000;
+    this.dropInterval = 1000;
     this.lastTime = 0;
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
@@ -36,6 +36,8 @@ class Game {
 
       if (row.filter((el) => el === 0).length === 0) {
         this.player.clearedRows += 1;
+        this.player.score += 30;
+        this.player.setScore();
         this.board.matrix.splice(i, 1);
         this.addNewRow();
       }
@@ -76,8 +78,6 @@ class Game {
 
 
 
-
-
   update(time = 0) {
     const deltaTime = time - this.lastTime;
     this.lastTime = time;
@@ -88,10 +88,11 @@ class Game {
     }
 
     this.draw();
-    requestAnimationFrame(this.update);
+    window.setTimeout(() => {
+      requestAnimationFrame(this.update);
+    }, 100);
 
   }
-
 
 
   collide() {
@@ -118,6 +119,7 @@ class Game {
      });
    });
  }
+
   move(dir) {
     this.piece.position.x += dir;
     if (this.collide()) {
@@ -141,7 +143,7 @@ class Game {
 
     if (this.collide()) {
       this.merge();
-      this.clearFilledRows();
+      this.clearRows();
       this.makeNewPiece();
     }
   }
@@ -149,8 +151,6 @@ class Game {
 
 
   draw() {
-
-
     this.board.matrix.forEach((row, idx) => {
       row.forEach((element, idx2) => {
         if (element === 0) {
@@ -162,7 +162,6 @@ class Game {
       });
     });
 
-
     this.piece.shape.forEach((row, idx) => {
       row.forEach((value, idx2) => {
         if (value !== 0) {
@@ -171,7 +170,6 @@ class Game {
         }
       });
     });
-
 
     this.nextPiece.shape.forEach((row, idx) => {
       row.forEach((value, idx2) => {
@@ -184,7 +182,6 @@ class Game {
   }
 
 
-
   makeNewPiece() {
     if (this.piece.position.y <= 1) {
       this.gameOver = true;
@@ -193,8 +190,6 @@ class Game {
       this.nextPiece = new Piece();
     }
   }
-
-
 
 
 }

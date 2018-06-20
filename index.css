@@ -1,3 +1,35 @@
+.screen {
+  display: flex;
+}
+
+.right-half {
+  margin-left: 15px;
+}
+
+.next-piece {
+  border: 1px solid grey;
+  width: 75px;
+  height: 75px;
+  margin-bottom: 15px;
+  font-family: Helvetica;
+  font-size: 10px;
+}
+
+#start-game {
+  margin-bottom: 15px;
+}
+
+#score {
+  font-family: Helvetica;
+  font-size: 10px;
+  margin-bottom: 15px;
+}
+
+#cleared-rows {
+  font-family: Helvetica;
+  font-size: 10px;
+}
+
 canvas {
   border: 1px solid red;
 }

@@ -51,15 +51,12 @@ class Piece {
 
   makePiece() {
     const shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
-    // this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
-    this.shape = shapesArray[3];
-    // this.position.x = Math.floor(24 - this.shape[0].length/2);
-
+    this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
+    // this.shape = shapesArray[3];
+    this.position.x = Math.floor(24 - this.shape[0].length/2);
   }
 
 
 }
-
-
 
 export default Piece;

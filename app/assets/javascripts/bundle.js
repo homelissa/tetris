@@ -110,7 +110,7 @@ var Board = function () {
 
     this.width = width;
     this.height = height;
-    this.matrix = this.make2DBoard(width / 2, height / 2);
+    this.matrix = this.make2DBoard(width / 4, height / 4);
     // this.matrix = this.make2DBoard(this.width, this.height);
   }
 
@@ -184,7 +184,7 @@ var Game = function () {
     this.nextPiece = new _piece2.default();
     this.gameOver = false;
     this.dropCounter = 0;
-    this.dropInterval = 3000;
+    this.dropInterval = 1000;
     this.lastTime = 0;
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
@@ -214,6 +214,8 @@ var Game = function () {
           return el === 0;
         }).length === 0) {
           this.player.clearedRows += 1;
+          this.player.score += 30;
+          this.player.setScore();
           this.board.matrix.splice(i, 1);
           this.addNewRow();
         }
@@ -255,6 +257,8 @@ var Game = function () {
   }, {
     key: 'update',
     value: function update() {
+      var _this = this;
+
       var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
       var deltaTime = time - this.lastTime;
@@ -266,7 +270,9 @@ var Game = function () {
       }
 
       this.draw();
-      requestAnimationFrame(this.update);
+      window.setTimeout(function () {
+        requestAnimationFrame(_this.update);
+      }, 100);
     }
   }, {
     key: 'collide',
@@ -285,13 +291,13 @@ var Game = function () {
   }, {
     key: 'merge',
     value: function merge() {
-      var _this = this;
+      var _this2 = this;
 
       this.piece.shape.forEach(function (row, y) {
         row.forEach(function (value, x) {
           if (value !== 0) {
-            _this.player.clearedRows += 1;
-            _this.board.matrix[y + _this.piece.position.y - 1][x + _this.piece.position.x] = value;
+            _this2.player.clearedRows += 1;
+            _this2.board.matrix[y + _this2.piece.position.y - 1][x + _this2.piece.position.x] = value;
           }
         });
       });
@@ -322,31 +328,31 @@ var Game = function () {
 
       if (this.collide()) {
         this.merge();
-        this.clearFilledRows();
+        this.clearRows();
         this.makeNewPiece();
       }
     }
   }, {
     key: 'draw',
     value: function draw() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.board.matrix.forEach(function (row, idx) {
         row.forEach(function (element, idx2) {
           if (element === 0) {
-            _this2.ctx.fillStyle = 'rgb(36, 36, 36)';
+            _this3.ctx.fillStyle = 'rgb(36, 36, 36)';
           } else {
-            _this2.ctx.fillStyle = 'green';
+            _this3.ctx.fillStyle = 'green';
           }
-          _this2.ctx.fillRect(idx2, idx, 1, 1);
+          _this3.ctx.fillRect(idx2, idx, 1, 1);
         });
       });
 
       this.piece.shape.forEach(function (row, idx) {
         row.forEach(function (value, idx2) {
           if (value !== 0) {
-            _this2.ctx.fillStyle = 'blue';
-            _this2.ctx.fillRect(idx2 + _this2.piece.position.x, idx + _this2.piece.position.y, 1, 1);
+            _this3.ctx.fillStyle = 'blue';
+            _this3.ctx.fillRect(idx2 + _this3.piece.position.x, idx + _this3.piece.position.y, 1, 1);
           }
         });
       });
@@ -354,8 +360,8 @@ var Game = function () {
       this.nextPiece.shape.forEach(function (row, idx) {
         row.forEach(function (value, idx2) {
           if (value !== 0) {
-            _this2.ctx.fillStyle = 'blue';
-            _this2.ctx.fillRect(idx2 + _this2.nextPiece.position.x, idx + _this2.nextPiece.position.y, 1, 1);
+            _this3.ctx.fillStyle = 'blue';
+            _this3.ctx.fillRect(idx2 + _this3.nextPiece.position.x, idx + _this3.nextPiece.position.y, 1, 1);
           }
         });
       });
@@ -424,9 +430,9 @@ var Piece = function () {
     key: "makePiece",
     value: function makePiece() {
       var shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
-      // this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
-      this.shape = shapesArray[3];
-      // this.position.x = Math.floor(24 - this.shape[0].length/2);
+      this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
+      // this.shape = shapesArray[3];
+      this.position.x = Math.floor(24 - this.shape[0].length / 2);
     }
   }]);
 
@@ -451,6 +457,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _board = __webpack_require__(/*! ./board.js */ "./scripts/board.js");
 
 var _board2 = _interopRequireDefault(_board);
@@ -467,13 +475,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Player = function Player(board) {
-  _classCallCheck(this, Player);
+var Player = function () {
+  function Player(board) {
+    _classCallCheck(this, Player);
 
-  this.board = board;
-  this.clearedRows = 0;
-  this.score = 0;
-};
+    this.board = board;
+    this.clearedRows = 0;
+    this.score = 0;
+  }
+
+  _createClass(Player, [{
+    key: 'setScore',
+    value: function setScore() {
+      document.getElementById('score').innerText = this.score;
+      document.getElementById('cleared-rows').innerText = this.clearedRows;
+    }
+  }]);
+
+  return Player;
+}();
 
 exports.default = Player;
 
@@ -510,17 +530,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
+  ctx.scale(4, 4);
 
-  // const board = document.getElementById('canvas');
-  // board.width = 100;
-  // board.height = 180;
-  // const ctx = board.getContext('2d');
-  // ctx.scale(10, 10);
-
-
-  ctx.scale(2, 2);
-  // const board = new Board(12, 20);
-  // const board = new Board(10, 20);
   var board = new _board2.default(canvas.width, canvas.height);
   var player = new _player2.default(board);
   var game = new _game2.default(canvas, ctx, player);
