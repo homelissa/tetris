@@ -575,6 +575,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   window.addEventListener('keydown', function (event) {
+    event.preventDefault();
 
     switch (event.code) {
       case "ArrowDown":

@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   window.addEventListener('keydown', (event) => {
+    event.preventDefault();
 
     switch (event.code) {
       case "ArrowDown":
