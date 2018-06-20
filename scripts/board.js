@@ -2,7 +2,7 @@ class Board {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.matrix = this.make2DBoard(width, height);
+    this.matrix = this.make2DBoard(width/2, height/2);
   }
 
   //cols: width, rows: height
@@ -16,6 +16,13 @@ class Board {
     return arr;
   }
 
+
+
 }
 
+
+
+
+
+//
 export default Board;

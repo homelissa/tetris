@@ -110,7 +110,7 @@ var Board = function () {
 
     this.width = width;
     this.height = height;
-    this.matrix = this.make2DBoard(width, height);
+    this.matrix = this.make2DBoard(width / 2, height / 2);
   }
 
   //cols: width, rows: height
@@ -131,6 +131,9 @@ var Board = function () {
 
   return Board;
 }();
+
+//
+
 
 exports.default = Board;
 
@@ -227,17 +230,28 @@ var Game = function () {
     value: function addNewRow() {
       this.board.matrix.unshift(new Array(this.board.width));
     }
+
+    // fall() {
+    //
+    //   while (!this.collide()) {
+    //     this.piece.position.y += 1;
+    //     this.dropCounter = 0;
+    //   }
+    //
+    //   if (this.collide()) {
+    //     this.merge(this.piece);
+    //     this.clearRows();
+    //     this.makeNewPiece();
+    //   }
+    // }
+
   }, {
     key: 'fall',
     value: function fall() {
-
-      while (!this.collide()) {
-        this.piece.position.y += 1;
-        this.dropCounter = 0;
-      }
-
+      this.piece.position.y += 1;
+      // this.piece.position.x = 0;
       if (this.collide()) {
-        this.merge(this.piece);
+        this.merge();
         this.clearRows();
         this.makeNewPiece();
       }
@@ -280,10 +294,10 @@ var Game = function () {
     key: 'collide',
     value: function collide() {
       var shape = this.piece.shape;
-      var space = this.piece.position;
+      var pos = this.piece.position;
       for (var y = 0; y < shape.length; y++) {
         for (var x = 0; x < shape[y].length; x++) {
-          if (shape[y][x] !== 0 && (this.board.matrix[y + space.y] && this.board.matrix[y + space.y][x + space.x]) !== 0) {
+          if (shape[y][x] !== 0 && (this.board.matrix[y + pos.y] && this.board.matrix[y + pos.y][x + pos.x]) !== 0) {
             return true;
           }
         }
@@ -307,15 +321,17 @@ var Game = function () {
   }, {
     key: 'move',
     value: function move(dir) {
-      this.piece.pos.x += dir;
-      if (this.board.collide(this.board.matrix, this.piece)) {
-        this.piece.pos.x -= dir;
+      this.piece.position.x += dir;
+      if (this.board.collide()) {
+        this.piece.position.x -= dir;
       }
     }
   }, {
     key: 'draw',
     value: function draw() {
       var _this2 = this;
+
+      // this.ctx.clearRect(0, 0, this.board.width, this.board.height);
 
       this.board.matrix.forEach(function (row, idx) {
         row.forEach(function (element, idx2) {
@@ -346,6 +362,33 @@ var Game = function () {
         });
       });
     }
+
+    // draw() {
+    //    this.ctx.fillStyle = '#202328';
+    //    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    //    this.drawMatrix(this.board.matrix, {x: 0, y: 0});
+    //    this.drawMatrix(this.piece.shape, this.piece.position);
+    //  }
+    //
+    //  drawMatrix(matrix, offset) {
+    //    matrix.forEach((row, y) => {
+    //      row.forEach((value, x) => {
+    //        if (value !== 0) {
+    //          this.ctx.fillStyle = 'red'; //red
+    //          this.ctx.fillRect(x + offset.x,
+    //            y + offset.y,
+    //            1, 1);
+    //            this.ctx.lineWidth = 1/20;
+    //            this.ctx.strokeStyle = "white";
+    //            this.ctx.strokeRect(x + offset.x,
+    //              y + offset.y,
+    //              1, 1);
+    //              // context.fill();
+    //            }
+    //          });
+    //        });
+    //      }
+
 
     // draw(ctx, piece) {
     //   let x = 0;
@@ -519,21 +562,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  // ctx.scale(20, 20);
-  ctx.scale(3, 3);
-
+  // ctx.scale(12, 20);
+  ctx.scale(2, 2);
   // const board = new Board(12, 20);
   // const board = new Board(10, 20);
   var board = new _board2.default(canvas.width, canvas.height);
   var player = new _player2.default(board);
   var game = new _game2.default(canvas, ctx, player);
-  game.start();
-});
 
-function startGame() {
-  var game = document.getElementById('start-game');
-  game.start();
-}
+  var button = document.getElementById("start-game").addEventListener("click", function () {
+    game.clear();
+    game.start();
+  });
+
+  window.addEventListener('keydown', function (event) {
+
+    switch (event.code) {
+      case "ArrowDown":
+        game.fall();
+        break;
+      case "ArrowLeft":
+        game.move(-1);
+        break;
+      case "ArrowRight":
+        game.move(1);
+        break;
+    }
+  });
+});
 
 /***/ })
 

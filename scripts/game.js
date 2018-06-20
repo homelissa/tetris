@@ -53,15 +53,25 @@ class Game {
   }
 
 
+  // fall() {
+  //
+  //   while (!this.collide()) {
+  //     this.piece.position.y += 1;
+  //     this.dropCounter = 0;
+  //   }
+  //
+  //   if (this.collide()) {
+  //     this.merge(this.piece);
+  //     this.clearRows();
+  //     this.makeNewPiece();
+  //   }
+  // }
+
   fall() {
-
-    while (!this.collide()) {
-      this.piece.position.y += 1;
-      this.dropCounter = 0;
-    }
-
+    this.piece.position.y += 1;
+    // this.piece.position.x = 0;
     if (this.collide()) {
-      this.merge(this.piece);
+      this.merge();
       this.clearRows();
       this.makeNewPiece();
     }
@@ -104,10 +114,10 @@ class Game {
 
   collide() {
     const shape = this.piece.shape;
-    const space = this.piece.position;
+    const pos = this.piece.position;
     for (let y = 0; y < shape.length; y++) {
      for (let x = 0; x < shape[y].length; x++) {
-       if (shape[y][x] !== 0 && (this.board.matrix[y + space.y] && this.board.matrix[y + space.y][x + space.x]) !== 0) {
+       if (shape[y][x] !== 0 && (this.board.matrix[y + pos.y] && this.board.matrix[y + pos.y][x + pos.x]) !== 0) {
          return true;
        }
      }
@@ -127,15 +137,15 @@ class Game {
    });
  }
   move(dir) {
-    this.piece.pos.x += dir;
-    if (this.board.collide(this.board.matrix, this.piece)) {
-      this.piece.pos.x -= dir;
+    this.piece.position.x += dir;
+    if (this.board.collide()) {
+      this.piece.position.x -= dir;
     }
   }
 
 
   draw() {
-
+    // this.ctx.clearRect(0, 0, this.board.width, this.board.height);
 
     this.board.matrix.forEach((row, idx) => {
       row.forEach((element, idx2) => {
@@ -159,6 +169,8 @@ class Game {
     });
 
 
+
+
     this.nextPiece.shape.forEach((row, idx) => {
       row.forEach((value, idx2) => {
         if (value !== 0) {
@@ -168,6 +180,32 @@ class Game {
       });
     });
   }
+
+  // draw() {
+  //    this.ctx.fillStyle = '#202328';
+  //    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  //    this.drawMatrix(this.board.matrix, {x: 0, y: 0});
+  //    this.drawMatrix(this.piece.shape, this.piece.position);
+  //  }
+  //
+  //  drawMatrix(matrix, offset) {
+  //    matrix.forEach((row, y) => {
+  //      row.forEach((value, x) => {
+  //        if (value !== 0) {
+  //          this.ctx.fillStyle = 'red'; //red
+  //          this.ctx.fillRect(x + offset.x,
+  //            y + offset.y,
+  //            1, 1);
+  //            this.ctx.lineWidth = 1/20;
+  //            this.ctx.strokeStyle = "white";
+  //            this.ctx.strokeRect(x + offset.x,
+  //              y + offset.y,
+  //              1, 1);
+  //              // context.fill();
+  //            }
+  //          });
+  //        });
+  //      }
 
 
 
@@ -204,7 +242,6 @@ class Game {
   rotatePiece() {
 
   }
-
 
 
 
