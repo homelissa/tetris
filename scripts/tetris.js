@@ -45,6 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
       case "Space":
         game.fullFall();
         break;
+      case "ArrowUp":
+        game.rotate();
+        break;
+
     }
   });
 });
