@@ -90,7 +90,7 @@ class Game {
     this.draw();
     window.setTimeout(() => {
       requestAnimationFrame(this.update);
-    }, 100);
+    }, 200);
 
   }
 
@@ -188,8 +188,10 @@ class Game {
     } else {
       this.piece = this.nextPiece;
       this.nextPiece = new Piece();
+
     }
   }
+
 
 
 }

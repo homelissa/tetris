@@ -110,7 +110,7 @@ var Board = function () {
 
     this.width = width;
     this.height = height;
-    this.matrix = this.make2DBoard(width / 4, height / 4);
+    this.matrix = this.make2DBoard(width / 5, height / 5);
     // this.matrix = this.make2DBoard(this.width, this.height);
   }
 
@@ -272,7 +272,7 @@ var Game = function () {
       this.draw();
       window.setTimeout(function () {
         requestAnimationFrame(_this.update);
-      }, 100);
+      }, 200);
     }
   }, {
     key: 'collide',
@@ -432,7 +432,7 @@ var Piece = function () {
       var shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
       this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
       // this.shape = shapesArray[3];
-      this.position.x = Math.floor(24 - this.shape[0].length / 2);
+      // this.position.x = Math.floor(24 - this.shape[0].length/2);
     }
   }]);
 
@@ -530,7 +530,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  ctx.scale(4, 4);
+  ctx.scale(5, 5);
 
   var board = new _board2.default(canvas.width, canvas.height);
   var player = new _player2.default(board);
@@ -540,6 +540,13 @@ document.addEventListener('DOMContentLoaded', function () {
     game.clear();
     game.start();
   });
+
+  var nextPiece = document.getElementById('next-piece');
+  nextPiece.width = 50;
+  nextPiece.height = 50;
+  // const ctx2 = nextPiece.getContext('2d');
+  // ctx2.scale(10,10);
+
 
   window.addEventListener('keydown', function (event) {
     event.preventDefault();

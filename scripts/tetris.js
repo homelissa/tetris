@@ -8,7 +8,7 @@ import Player from './player.js';
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-  ctx.scale(4, 4);
+  ctx.scale(5, 5);
 
   const board = new Board(canvas.width, canvas.height);
   const player = new Player(board);
@@ -18,6 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     game.clear();
     game.start();
   });
+
+
+  const nextPiece = document.getElementById('next-piece');
+  nextPiece.width = 50;
+  nextPiece.height = 50;
+  // const ctx2 = nextPiece.getContext('2d');
+  // ctx2.scale(10,10);
+
 
 
   window.addEventListener('keydown', (event) => {
