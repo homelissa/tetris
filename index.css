@@ -50,3 +50,8 @@
 #canvas {
   border: 1px solid red;
 }
+
+.instructions {
+  font-family: Helvetica;
+  font-size: 10px;
+}

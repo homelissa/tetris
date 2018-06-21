@@ -493,7 +493,6 @@ var Player = function () {
     key: 'setScore',
     value: function setScore() {
       document.getElementById('score').innerText = this.score;
-      document.getElementById('cleared-rows').innerText = this.clearedRows;
     }
   }]);
 
