@@ -8,11 +8,11 @@ import Player from './player.js';
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-  ctx.scale(5, 5);
+  ctx.scale(10, 10);
 
   const smallCanvas = document.getElementById('small-canvas');
   const ctx2 = smallCanvas.getContext('2d');
-  ctx2.scale(3, 3);
+  ctx2.scale(12, 12);
 
   const board = new Board(canvas.width, canvas.height);
   const player = new Player(board);
@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  const nextPiece = document.getElementById('next-piece');
-  nextPiece.width =  100;
-  nextPiece.height = 100;
+  // const nextPiece = document.getElementById('next-piece');
+  // nextPiece.width =  100;
+  // nextPiece.height = 100;
   // const ctx2 = nextPiece.getContext('2d');
   // ctx2.scale(10,10);
 

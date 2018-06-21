@@ -92,7 +92,7 @@ class Game {
     this.draw();
     window.setTimeout(() => {
       requestAnimationFrame(this.update);
-    }, 200);
+    }, 350);
 
   }
 
@@ -176,11 +176,14 @@ class Game {
       });
     });
 
+console.log(this.nextPiece.shape);
+// debugger
     this.nextPiece.shape.forEach((row, idx) => {
       row.forEach((value, idx2) => {
         if (value !== 0) {
+          // console.log(value);
           this.ctx2.fillStyle = 'blue';
-          this.ctx2.fillRect(idx2, idx, 5, 5);
+          this.ctx2.fillRect(idx2 + 1, idx + 1, 1, 1);
         }
       });
     });

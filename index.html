@@ -15,22 +15,29 @@
     <div>Play Tetris!</div>
 
     <div class='screen'>
-      <canvas id="canvas" width="100" height="180"></canvas>
+      <canvas id="canvas" width="150" height="180"></canvas>
 
       <!-- <canvas id="canvas" width="20" height="180"></canvas> -->
 
       <div class='right-half'>
-        <div id='next-piece'>Next
-          <canvas id="small-canvas" width="60" height="50"></canvas>
+
+        <div class='next-container'>
+          <div id='next-piece'>
+          <canvas id="small-canvas" width="80" height="70"></canvas>
         </div>
-        <button id='start-game'>Start Game</button>
-        <div id='score'>Score: 0</div>
+
+        <button id='start-game'class="no-show">Start Game</button>
+
+        <div class='score-container'>
+          <div class='score-label'>Score: </div>
+          <div id='score'>0</div>
+        </div>
+
         <ul class='instructions'>Instructions
           <li>Make full horizontal lines with the different shaped blocks that
             fall into the game area.</li>
           <li>
-            Full lines will then disappear and provide
-            points.</li>
+            Full lines will clear and earn points.</li>
 
             <li>Left arrow key: move block to left</li>
             <li>Right arrow key: move block to right</li>

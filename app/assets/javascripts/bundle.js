@@ -110,7 +110,7 @@ var Board = function () {
 
     this.width = width;
     this.height = height;
-    this.matrix = this.make2DBoard(width / 5, height / 5);
+    this.matrix = this.make2DBoard(width / 10, height / 10);
     // this.matrix = this.make2DBoard(this.width, this.height);
   }
 
@@ -274,7 +274,7 @@ var Game = function () {
       this.draw();
       window.setTimeout(function () {
         requestAnimationFrame(_this.update);
-      }, 200);
+      }, 350);
     }
   }, {
     key: 'collide',
@@ -362,11 +362,14 @@ var Game = function () {
         });
       });
 
+      console.log(this.nextPiece.shape);
+      // debugger
       this.nextPiece.shape.forEach(function (row, idx) {
         row.forEach(function (value, idx2) {
           if (value !== 0) {
+            // console.log(value);
             _this3.ctx2.fillStyle = 'blue';
-            _this3.ctx2.fillRect(idx2, idx, 5, 5);
+            _this3.ctx2.fillRect(idx2 + 1, idx + 1, 1, 1);
           }
         });
       });
@@ -437,7 +440,7 @@ var Piece = function () {
       var shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
       this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
       // this.shape = shapesArray[3];
-      this.position.x = Math.floor(10 - this.shape[0].length / 2);
+      this.position.x = Math.floor(5 - this.shape[0].length / 2);
     }
   }]);
 
@@ -534,11 +537,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  ctx.scale(5, 5);
+  ctx.scale(10, 10);
 
   var smallCanvas = document.getElementById('small-canvas');
   var ctx2 = smallCanvas.getContext('2d');
-  ctx2.scale(3, 3);
+  ctx2.scale(12, 12);
 
   var board = new _board2.default(canvas.width, canvas.height);
   var player = new _player2.default(board);
@@ -549,9 +552,9 @@ document.addEventListener('DOMContentLoaded', function () {
     game.start();
   });
 
-  var nextPiece = document.getElementById('next-piece');
-  nextPiece.width = 100;
-  nextPiece.height = 100;
+  // const nextPiece = document.getElementById('next-piece');
+  // nextPiece.width =  100;
+  // nextPiece.height = 100;
   // const ctx2 = nextPiece.getContext('2d');
   // ctx2.scale(10,10);
 
