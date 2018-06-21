@@ -173,11 +173,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Game = function () {
-  function Game(canvas, ctx, player) {
+  function Game(canvas, ctx, smallCanvas, ctx2, player) {
     _classCallCheck(this, Game);
 
     this.canvas = canvas;
     this.ctx = ctx;
+    this.smallCanvas = smallCanvas;
+    this.ctx2 = ctx2;
     this.player = player;
     this.board = player.board;
     this.piece = new _piece2.default();
@@ -231,7 +233,7 @@ var Game = function () {
   }, {
     key: 'addNewRow',
     value: function addNewRow() {
-      this.board.matrix.unshift(new Array(this.board.width));
+      this.board.matrix.unshift(new Array(20).fill(0));
     }
   }, {
     key: 'fall',
@@ -337,6 +339,9 @@ var Game = function () {
     value: function draw() {
       var _this3 = this;
 
+      this.ctx.clearRect(0, 0, 10, 18);
+      this.ctx2.clearRect(0, 0, 10, 18);
+
       this.board.matrix.forEach(function (row, idx) {
         row.forEach(function (element, idx2) {
           if (element === 0) {
@@ -360,8 +365,8 @@ var Game = function () {
       this.nextPiece.shape.forEach(function (row, idx) {
         row.forEach(function (value, idx2) {
           if (value !== 0) {
-            _this3.ctx.fillStyle = 'blue';
-            _this3.ctx.fillRect(idx2 + _this3.nextPiece.position.x, idx + _this3.nextPiece.position.y, 1, 1);
+            _this3.ctx2.fillStyle = 'blue';
+            _this3.ctx2.fillRect(idx2, idx, 5, 5);
           }
         });
       });
@@ -532,9 +537,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var ctx = canvas.getContext('2d');
   ctx.scale(5, 5);
 
+  var smallCanvas = document.getElementById('small-canvas');
+  var ctx2 = smallCanvas.getContext('2d');
+  ctx2.scale(3, 3);
+
   var board = new _board2.default(canvas.width, canvas.height);
   var player = new _player2.default(board);
-  var game = new _game2.default(canvas, ctx, player);
+  var game = new _game2.default(canvas, ctx, smallCanvas, ctx2, player);
 
   var button = document.getElementById("start-game").addEventListener("click", function () {
     game.clear();
@@ -542,8 +551,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   var nextPiece = document.getElementById('next-piece');
-  nextPiece.width = 50;
-  nextPiece.height = 50;
+  nextPiece.width = 100;
+  nextPiece.height = 100;
   // const ctx2 = nextPiece.getContext('2d');
   // ctx2.scale(10,10);
 

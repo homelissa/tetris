@@ -3,9 +3,11 @@ import Piece from './piece.js';
 import Player from './player.js';
 
 class Game {
-  constructor(canvas, ctx, player){
+  constructor(canvas, ctx, smallCanvas, ctx2, player){
     this.canvas = canvas;
     this.ctx = ctx;
+    this.smallCanvas = smallCanvas;
+    this.ctx2 = ctx2;
     this.player = player;
     this.board = player.board;
     this.piece = new Piece();
@@ -51,7 +53,7 @@ class Game {
   }
 
   addNewRow() {
-    this.board.matrix.unshift(new Array(this.board.width));
+    this.board.matrix.unshift(new Array(20).fill(0));
   }
 
 
@@ -151,6 +153,9 @@ class Game {
 
 
   draw() {
+    this.ctx.clearRect(0, 0, 10, 18);
+    this.ctx2.clearRect(0, 0, 10, 18);
+
     this.board.matrix.forEach((row, idx) => {
       row.forEach((element, idx2) => {
         if (element === 0) {
@@ -174,8 +179,8 @@ class Game {
     this.nextPiece.shape.forEach((row, idx) => {
       row.forEach((value, idx2) => {
         if (value !== 0) {
-          this.ctx.fillStyle = 'blue';
-          this.ctx.fillRect(idx2 + this.nextPiece.position.x, idx + this.nextPiece.position.y, 1, 1);
+          this.ctx2.fillStyle = 'blue';
+          this.ctx2.fillRect(idx2, idx, 5, 5);
         }
       });
     });

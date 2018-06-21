@@ -10,9 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
   ctx.scale(5, 5);
 
+  const smallCanvas = document.getElementById('small-canvas');
+  const ctx2 = smallCanvas.getContext('2d');
+  ctx2.scale(3, 3);
+
   const board = new Board(canvas.width, canvas.height);
   const player = new Player(board);
-  const game = new Game(canvas, ctx, player);
+  const game = new Game(canvas, ctx, smallCanvas, ctx2, player);
 
   const button = document.getElementById("start-game").addEventListener("click", function() {
     game.clear();
@@ -21,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const nextPiece = document.getElementById('next-piece');
-  nextPiece.width = 50;
-  nextPiece.height = 50;
+  nextPiece.width =  100;
+  nextPiece.height = 100;
   // const ctx2 = nextPiece.getContext('2d');
   // ctx2.scale(10,10);
 
