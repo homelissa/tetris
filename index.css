@@ -7,7 +7,7 @@
   box-shadow: 2px 2px 3px 3px #ccc;
   text-align: center;
   font-size: 18px;
-  font-family: Helvetica;
+  font-family: Arial;
   font-weight: bold;
 }
 
@@ -35,6 +35,9 @@
   margin-bottom: 5px;
   font-family: Helvetica;
   font-size: 10px;
+  align-items: center;
+  margin-left: 30px;
+  /* border: 1px solid red; */
 }
 
 #start-game {
@@ -51,38 +54,38 @@
 }
 
 .score-label {
-  font-family: Helvetica;
+  font-family: Arial;
   font-size: 10px;
 }
 
 #score {
-  font-family: Helvetica;
+  font-family: Arial;
   font-size: 10px;
   padding-left: 5px;
 }
 
 #cleared-rows {
-  font-family: Helvetica;
+  font-family: Arial;
   font-size: 10px;
 }
 
-canvas {
+#canvas {
   border: 1px solid red;
 }
 
 .instructions {
-  font-family: Helvetica;
+  font-family: Arial;
   font-size: 10px;
   padding-bottom: 10px;
   padding-left: 0px;
+  margin-bottom: 10px;
 
 }
 
 .instructions li {
-  font-size: 6px;
+  font-size: 7px;
   text-align: left;
-  line-height: 8px;
-  /* margin-top: 5px; */
+  margin-top: 5px;
   margin-left: 0px;
   width: 150px;
 }

@@ -19,7 +19,31 @@ class Game {
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
     this.fall = this.fall.bind(this);
+    this.colors = [
+      null,
+      '#e67e22',
+      '#1abc9c',
+      '#3498db',
+      '#f1c40f',
+      '#e74c3c',
+      '#2ecc71',
+      '#9b59b6'
+    ];
   }
+
+
+
+  // ('white',#f0f0f0),
+  //  ('blue',#3498db),
+  //  ('yellow',#f1c40f),
+  //  ('green',#2ecc71),
+  //  ('red',#e74c3c),
+  //  ('grey',#95a5a6),
+  //  ('black',#34495e),
+  //  ('purple',#9b59b6),
+  //  ('white',#ecf0f1),
+  //  ('orange',#e67e22),
+  //  ('turquoise',#1abc9c);
 
   start() {
     this.player.score = 0;
@@ -81,18 +105,20 @@ class Game {
 
 
   update(time = 0) {
-    const deltaTime = time - this.lastTime;
-    this.lastTime = time;
-    this.dropCounter += deltaTime;
 
-    if (this.dropCounter > this.dropInterval) {
-      this.fall();
-    }
 
-    this.draw();
-    window.setTimeout(() => {
-      requestAnimationFrame(this.update);
-    }, 350);
+      const deltaTime = time - this.lastTime;
+      this.lastTime = time;
+      this.dropCounter += deltaTime;
+
+      if (this.dropCounter > this.dropInterval) {
+        this.fall();
+      }
+
+      this.draw();
+      window.setTimeout(() => {
+        requestAnimationFrame(this.update);
+      }, 350);
 
   }
 
@@ -157,11 +183,11 @@ class Game {
     this.ctx2.clearRect(0, 0, 10, 18);
 
     this.board.matrix.forEach((row, idx) => {
-      row.forEach((element, idx2) => {
-        if (element === 0) {
+      row.forEach((value, idx2) => {
+        if (value === 0) {
           this.ctx.fillStyle = 'rgb(36, 36, 36)';
         } else {
-          this.ctx.fillStyle = 'green';
+          this.ctx.fillStyle = this.colors[value];
         }
         this.ctx.fillRect(idx2, idx, 1, 1);
       });
@@ -170,7 +196,7 @@ class Game {
     this.piece.shape.forEach((row, idx) => {
       row.forEach((value, idx2) => {
         if (value !== 0) {
-          this.ctx.fillStyle = 'blue';
+          this.ctx.fillStyle = this.colors[value];
           this.ctx.fillRect(idx2 + this.piece.position.x, idx + this.piece.position.y, 1, 1);
         }
       });
@@ -182,8 +208,8 @@ console.log(this.nextPiece.shape);
       row.forEach((value, idx2) => {
         if (value !== 0) {
           // console.log(value);
-          this.ctx2.fillStyle = 'blue';
-          this.ctx2.fillRect(idx2 + 1, idx + 1, 1, 1);
+          this.ctx2.fillStyle = this.colors[value];
+          this.ctx2.fillRect(idx2 + 2, idx + 1, 1, 1);
         }
       });
     });
