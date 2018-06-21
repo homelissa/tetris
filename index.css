@@ -25,7 +25,6 @@
 }
 
 #next-piece {
-  border: 1px solid grey;
   width: 75px;
   height: 75px;
   margin-bottom: 15px;
@@ -48,6 +47,6 @@
   font-size: 10px;
 }
 
-canvas {
+#canvas {
   border: 1px solid red;
 }
