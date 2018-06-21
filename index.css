@@ -1,16 +1,24 @@
+ @import url("https://fonts.googleapis.com/css?family=Lato:400,900");
+
 .frame {
   width: 345px;
   padding-top: 10px;
   padding-bottom: 15px;
   padding-left: 10px;
-  border: 2px solid grey;
-  box-shadow: 2px 2px 3px 3px #ccc;
+  border: 2px solid lightgrey;
+  border-radius: 3px;
   text-align: center;
-  font-size: 18px;
-  font-family: Arial;
-  font-weight: bold;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-bottom: 15px;
 }
 
+
+.header {
+  font-size: 18px;
+  font-family: 'Lato';
+  font-weight: bold;
+}
 
 .screen {
   display: flex;
@@ -33,8 +41,9 @@
   width: 75px;
   height: 75px;
   margin-bottom: 5px;
-  font-family: Helvetica;
+  font-family: 'Lato';
   font-size: 10px;
+  font-weight: bold;
   align-items: center;
   margin-left: 30px;
   /* border: 1px solid red; */
@@ -42,6 +51,12 @@
 
 #start-game {
   margin-bottom: 15px;
+  font-family: 'Lato';
+  background-color: #40d9ac;
+  border-color: #40d9ac;
+  border-radius: 3px;
+  text-decoration: none;
+  outline: none;
 }
 
 /* .no-show {
@@ -54,13 +69,15 @@
 }
 
 .score-label {
-  font-family: Arial;
+  font-family: 'Lato';
   font-size: 10px;
+  font-weight: bold;
 }
 
 #score {
-  font-family: Arial;
+  font-family: 'Lato';
   font-size: 10px;
+  font-weight: bold;
   padding-left: 5px;
 }
 
@@ -70,11 +87,12 @@
 }
 
 #canvas {
-  border: 1px solid red;
+  border: 1px solid #40d9ac;
+  border-radius: 3px;
 }
 
 .instructions {
-  font-family: Arial;
+  font-family: 'Lato';
   font-size: 10px;
   padding-bottom: 10px;
   padding-left: 0px;

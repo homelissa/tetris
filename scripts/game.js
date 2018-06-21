@@ -30,20 +30,8 @@ class Game {
       '#9b59b6'
     ];
   }
+  //orange, turquoise, blue, yellow, red, green, purple
 
-
-
-  // ('white',#f0f0f0),
-  //  ('blue',#3498db),
-  //  ('yellow',#f1c40f),
-  //  ('green',#2ecc71),
-  //  ('red',#e74c3c),
-  //  ('grey',#95a5a6),
-  //  ('black',#34495e),
-  //  ('purple',#9b59b6),
-  //  ('white',#ecf0f1),
-  //  ('orange',#e67e22),
-  //  ('turquoise',#1abc9c);
 
   start() {
     this.player.score = 0;
