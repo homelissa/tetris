@@ -110,7 +110,9 @@ var Board = function () {
 
     this.width = width;
     this.height = height;
-    this.matrix = this.make2DBoard(width / 10, height / 10);
+    // this.matrix = this.make2DBoard(width/12, height/12);
+    this.matrix = this.make2DBoard(width / 20, height / 20);
+
     // this.matrix = this.make2DBoard(this.width, this.height);
   }
 
@@ -278,7 +280,7 @@ var Game = function () {
       this.draw();
       window.setTimeout(function () {
         requestAnimationFrame(_this.update);
-      }, 350);
+      }, 400);
     }
   }, {
     key: 'collide',
@@ -444,7 +446,7 @@ var Piece = function () {
       var shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
       this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
       // this.shape = shapesArray[3];
-      this.position.x = Math.floor(5 - this.shape[0].length / 2);
+      this.position.x = Math.floor(12 - this.shape[0].length / 2);
     }
   }]);
 
@@ -541,11 +543,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  ctx.scale(10, 10);
+  ctx.scale(20, 20);
 
   var smallCanvas = document.getElementById('small-canvas');
   var ctx2 = smallCanvas.getContext('2d');
-  ctx2.scale(12, 12);
+  ctx2.scale(20, 20);
 
   var board = new _board2.default(canvas.width, canvas.height);
   var player = new _player2.default(board);

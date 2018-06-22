@@ -2,7 +2,9 @@ class Board {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.matrix = this.make2DBoard(width/10, height/10);
+    // this.matrix = this.make2DBoard(width/12, height/12);
+    this.matrix = this.make2DBoard(width/20, height/20);
+
     // this.matrix = this.make2DBoard(this.width, this.height);
   }
 

@@ -8,11 +8,11 @@ import Player from './player.js';
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-  ctx.scale(10, 10);
+  ctx.scale(20, 20);
 
   const smallCanvas = document.getElementById('small-canvas');
   const ctx2 = smallCanvas.getContext('2d');
-  ctx2.scale(12, 12);
+  ctx2.scale(20, 20);
 
   const board = new Board(canvas.width, canvas.height);
   const player = new Player(board);

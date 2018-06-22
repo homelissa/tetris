@@ -53,7 +53,7 @@ class Piece {
     const shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
     this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
     // this.shape = shapesArray[3];
-    this.position.x = Math.floor(5- this.shape[0].length/2);
+    this.position.x = Math.floor(12- this.shape[0].length/2);
   }
 
 

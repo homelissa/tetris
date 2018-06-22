@@ -106,7 +106,7 @@ class Game {
       this.draw();
       window.setTimeout(() => {
         requestAnimationFrame(this.update);
-      }, 350);
+      }, 400);
 
   }
 
