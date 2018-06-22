@@ -99,11 +99,14 @@ class Game {
       this.lastTime = time;
       this.dropCounter += deltaTime;
 
-      if (this.dropCounter > this.dropInterval) {
-        this.fall();
+      if (!this.gameOver) {
+        if (this.dropCounter > this.dropInterval) {
+          this.fall();
+        }
+        this.draw();
+
       }
 
-      this.draw();
       window.setTimeout(() => {
         requestAnimationFrame(this.update);
       }, 400);
@@ -207,11 +210,16 @@ console.log(this.nextPiece.shape);
   makeNewPiece() {
     if (this.piece.position.y <= 1) {
       this.gameOver = true;
+      // document.getElementById('game-over').innerHTML = `<div>Game over! Score: ${this.player.score}</div>`
     } else {
       this.piece = this.nextPiece;
       this.nextPiece = new Piece();
 
     }
+  }
+
+  reset() {
+    
   }
 
 

@@ -273,11 +273,13 @@ var Game = function () {
       this.lastTime = time;
       this.dropCounter += deltaTime;
 
-      if (this.dropCounter > this.dropInterval) {
-        this.fall();
+      if (!this.gameOver) {
+        if (this.dropCounter > this.dropInterval) {
+          this.fall();
+        }
+        this.draw();
       }
 
-      this.draw();
       window.setTimeout(function () {
         requestAnimationFrame(_this.update);
       }, 400);
@@ -385,11 +387,15 @@ var Game = function () {
     value: function makeNewPiece() {
       if (this.piece.position.y <= 1) {
         this.gameOver = true;
+        // document.getElementById('game-over').innerHTML = `<div>Game over! Score: ${this.player.score}</div>`
       } else {
         this.piece = this.nextPiece;
         this.nextPiece = new _piece2.default();
       }
     }
+  }, {
+    key: 'reset',
+    value: function reset() {}
   }]);
 
   return Game;
@@ -555,15 +561,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var button = document.getElementById("start-game").addEventListener("click", function () {
     game.clear();
+    game.draw();
+    game.gameOver = false;
     game.start();
   });
-
-  // const nextPiece = document.getElementById('next-piece');
-  // nextPiece.width =  100;
-  // nextPiece.height = 100;
-  // const ctx2 = nextPiece.getContext('2d');
-  // ctx2.scale(10,10);
-
 
   window.addEventListener('keydown', function (event) {
     event.preventDefault();

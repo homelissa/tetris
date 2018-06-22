@@ -20,16 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const button = document.getElementById("start-game").addEventListener("click", function() {
     game.clear();
+    game.draw();
+    game.gameOver = false;
     game.start();
   });
-
-
-  // const nextPiece = document.getElementById('next-piece');
-  // nextPiece.width =  100;
-  // nextPiece.height = 100;
-  // const ctx2 = nextPiece.getContext('2d');
-  // ctx2.scale(10,10);
-
 
 
   window.addEventListener('keydown', (event) => {
