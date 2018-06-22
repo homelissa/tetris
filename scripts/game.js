@@ -193,12 +193,10 @@ class Game {
       });
     });
 
-console.log(this.nextPiece.shape);
-// debugger
+
     this.nextPiece.shape.forEach((row, idx) => {
       row.forEach((value, idx2) => {
         if (value !== 0) {
-          // console.log(value);
           this.ctx2.fillStyle = this.colors[value];
           this.ctx2.fillRect(idx2 + 2, idx + 1, 1, 1);
         }
@@ -210,7 +208,7 @@ console.log(this.nextPiece.shape);
   makeNewPiece() {
     if (this.piece.position.y <= 1) {
       this.gameOver = true;
-      // document.getElementById('game-over').innerHTML = `<div>Game over! Score: ${this.player.score}</div>`
+      document.getElementById('game-over').innerHTML = `<div>Game over! Score: ${this.player.score}</div>`
     } else {
       this.piece = this.nextPiece;
       this.nextPiece = new Piece();
@@ -219,7 +217,10 @@ console.log(this.nextPiece.shape);
   }
 
   reset() {
-    
+    document.getElementById('game-over').style.display = 'none';
+    this.clear();
+    this.draw();
+    this.gameOver = false;
   }
 
 

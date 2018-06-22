@@ -370,12 +370,9 @@ var Game = function () {
         });
       });
 
-      console.log(this.nextPiece.shape);
-      // debugger
       this.nextPiece.shape.forEach(function (row, idx) {
         row.forEach(function (value, idx2) {
           if (value !== 0) {
-            // console.log(value);
             _this3.ctx2.fillStyle = _this3.colors[value];
             _this3.ctx2.fillRect(idx2 + 2, idx + 1, 1, 1);
           }
@@ -387,7 +384,7 @@ var Game = function () {
     value: function makeNewPiece() {
       if (this.piece.position.y <= 1) {
         this.gameOver = true;
-        // document.getElementById('game-over').innerHTML = `<div>Game over! Score: ${this.player.score}</div>`
+        document.getElementById('game-over').innerHTML = '<div>Game over! Score: ' + this.player.score + '</div>';
       } else {
         this.piece = this.nextPiece;
         this.nextPiece = new _piece2.default();
@@ -395,7 +392,12 @@ var Game = function () {
     }
   }, {
     key: 'reset',
-    value: function reset() {}
+    value: function reset() {
+      document.getElementById('game-over').style.display = 'none';
+      this.clear();
+      this.draw();
+      this.gameOver = false;
+    }
   }]);
 
   return Game;
@@ -452,7 +454,7 @@ var Piece = function () {
       var shapesArray = [LShape, lShape, JShape, OShape, ZShape, SShape, TShape];
       this.shape = shapesArray[Math.floor(Math.random() * shapesArray.length)];
       // this.shape = shapesArray[3];
-      this.position.x = Math.floor(12 - this.shape[0].length / 2);
+      this.position.x = Math.floor(8 - this.shape[0].length / 2);
     }
   }]);
 
@@ -560,9 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var game = new _game2.default(canvas, ctx, smallCanvas, ctx2, player);
 
   var button = document.getElementById("start-game").addEventListener("click", function () {
-    game.clear();
-    game.draw();
-    game.gameOver = false;
+    game.reset();
     game.start();
   });
 

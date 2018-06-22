@@ -19,9 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const game = new Game(canvas, ctx, smallCanvas, ctx2, player);
 
   const button = document.getElementById("start-game").addEventListener("click", function() {
-    game.clear();
-    game.draw();
-    game.gameOver = false;
+    game.reset();
     game.start();
   });
 
