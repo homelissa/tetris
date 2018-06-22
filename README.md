@@ -17,7 +17,7 @@ In Tetris, players will be able to:
 * Use the keyboard to move and rotate puzzle pieces.
 
 ## Code Highlights
-I implemented an algorithm that iterates through the board matrix and tetris pieces and draws the game screen. Each tetris piece is filled with its respective shape color. The board has white grid lines so users can easily see where the piece will land at.
+I implemented an algorithm that iterates through the board matrix and tetris pieces and draws the game screen. Each tetris piece is filled with its respective shape color.
 
 ```javascript
 
@@ -44,7 +44,6 @@ draw() {
     });
   });
 
-  this.drawGrid();
 
 }
 

@@ -70,6 +70,8 @@ class Game {
 
   fall() {
     this.piece.position.y += 1;
+    // this.drawGrid();
+
     if (this.collide()) {
       this.merge();
       this.clearRows();
@@ -82,6 +84,8 @@ class Game {
       this.piece.position.y++;
 
     }
+    // this.drawGrid();
+
 
     this.merge();
     this.clearRows();
@@ -198,7 +202,7 @@ class Game {
       });
     });
 
-    this.drawGrid();
+    // this.drawGrid();
 
   }
 

@@ -239,6 +239,8 @@ var Game = function () {
     key: 'fall',
     value: function fall() {
       this.piece.position.y += 1;
+      // this.drawGrid();
+
       if (this.collide()) {
         this.merge();
         this.clearRows();
@@ -251,6 +253,8 @@ var Game = function () {
       while (!this.collide()) {
         this.piece.position.y++;
       }
+      // this.drawGrid();
+
 
       this.merge();
       this.clearRows();
@@ -373,7 +377,7 @@ var Game = function () {
         });
       });
 
-      this.drawGrid();
+      // this.drawGrid();
     }
   }, {
     key: 'drawGrid',
