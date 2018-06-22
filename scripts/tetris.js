@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const button = document.getElementById("start-game").addEventListener("click", function() {
     game.reset();
     game.start();
+
   });
 
 

@@ -36,7 +36,6 @@ class Game {
   start() {
     this.player.score = 0;
     this.update();
-
   }
 
   clear() {
@@ -52,7 +51,8 @@ class Game {
         this.player.clearedRows += 1;
         this.player.score += 30;
         this.player.setScore();
-        this.board.matrix.splice(i, 1);
+        this.removeRow(this.board.matrix, i);
+        // this.board.matrix.splice(i, 1);
         this.addNewRow();
       }
     }
@@ -67,8 +67,6 @@ class Game {
   addNewRow() {
     this.board.matrix.unshift(new Array(20).fill(0));
   }
-
-
 
   fall() {
     this.piece.position.y += 1;
@@ -91,10 +89,7 @@ class Game {
   }
 
 
-
   update(time = 0) {
-
-
       const deltaTime = time - this.lastTime;
       this.lastTime = time;
       this.dropCounter += deltaTime;
@@ -202,13 +197,31 @@ class Game {
         }
       });
     });
+
+    this.drawGrid();
+
+  }
+
+  drawGrid() {
+    for (var i = 1; i < 20; i++) {
+      this.ctx.moveTo(0, i);
+      this.ctx.lineTo(20, i);
+      this.ctx.lineWidth = 0.001;
+      this.ctx.strokeStyle = 'white';
+      this.ctx.stroke();
+
+      this.ctx.moveTo(i, 0);
+      this.ctx.lineTo(i, 20);
+      this.ctx.lineWidth = 0.001;
+      this.ctx.strokeStyle = 'white';
+      this.ctx.stroke();
+    }
   }
 
 
   makeNewPiece() {
     if (this.piece.position.y <= 1) {
       this.gameOver = true;
-      document.getElementById('game-over').innerHTML = `<div>Game over! Score: ${this.player.score}</div>`
     } else {
       this.piece = this.nextPiece;
       this.nextPiece = new Piece();
@@ -217,13 +230,10 @@ class Game {
   }
 
   reset() {
-    document.getElementById('game-over').style.display = 'none';
     this.clear();
     this.draw();
     this.gameOver = false;
   }
-
-
 
 }
 

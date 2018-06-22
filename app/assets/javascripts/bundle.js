@@ -110,10 +110,7 @@ var Board = function () {
 
     this.width = width;
     this.height = height;
-    // this.matrix = this.make2DBoard(width/12, height/12);
     this.matrix = this.make2DBoard(width / 20, height / 20);
-
-    // this.matrix = this.make2DBoard(this.width, this.height);
   }
 
   //cols: width, rows: height
@@ -134,9 +131,6 @@ var Board = function () {
 
   return Board;
 }();
-
-//
-
 
 exports.default = Board;
 
@@ -223,7 +217,8 @@ var Game = function () {
           this.player.clearedRows += 1;
           this.player.score += 30;
           this.player.setScore();
-          this.board.matrix.splice(i, 1);
+          this.removeRow(this.board.matrix, i);
+          // this.board.matrix.splice(i, 1);
           this.addNewRow();
         }
       }
@@ -267,7 +262,6 @@ var Game = function () {
       var _this = this;
 
       var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
 
       var deltaTime = time - this.lastTime;
       this.lastTime = time;
@@ -378,13 +372,31 @@ var Game = function () {
           }
         });
       });
+
+      this.drawGrid();
+    }
+  }, {
+    key: 'drawGrid',
+    value: function drawGrid() {
+      for (var i = 1; i < 20; i++) {
+        this.ctx.moveTo(0, i);
+        this.ctx.lineTo(20, i);
+        this.ctx.lineWidth = 0.001;
+        this.ctx.strokeStyle = 'white';
+        this.ctx.stroke();
+
+        this.ctx.moveTo(i, 0);
+        this.ctx.lineTo(i, 20);
+        this.ctx.lineWidth = 0.001;
+        this.ctx.strokeStyle = 'white';
+        this.ctx.stroke();
+      }
     }
   }, {
     key: 'makeNewPiece',
     value: function makeNewPiece() {
       if (this.piece.position.y <= 1) {
         this.gameOver = true;
-        document.getElementById('game-over').innerHTML = '<div>Game over! Score: ' + this.player.score + '</div>';
       } else {
         this.piece = this.nextPiece;
         this.nextPiece = new _piece2.default();
@@ -393,7 +405,6 @@ var Game = function () {
   }, {
     key: 'reset',
     value: function reset() {
-      document.getElementById('game-over').style.display = 'none';
       this.clear();
       this.draw();
       this.gameOver = false;
