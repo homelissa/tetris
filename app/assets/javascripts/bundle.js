@@ -217,8 +217,8 @@ var Game = function () {
           this.player.clearedRows += 1;
           this.player.score += 30;
           this.player.setScore();
-          this.removeRow(this.board.matrix, i);
-          // this.board.matrix.splice(i, 1);
+          // this.removeRow(this.board.matrix, i);
+          this.board.matrix.splice(i, 1);
           this.addNewRow();
         }
       }
@@ -377,7 +377,7 @@ var Game = function () {
         });
       });
 
-      // this.drawGrid();
+      this.drawGrid();
     }
   }, {
     key: 'drawGrid',
