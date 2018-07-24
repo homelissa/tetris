@@ -394,6 +394,7 @@ var Game = function () {
         document.getElementById('game-over').innerHTML = '<div>Game Over! Score: ' + this.player.score + '</div>';
         document.getElementById('game-over').style.display = 'block';
         document.getElementById('game-over').style.opacity = 1;
+        document.getElementById('song').pause();
       } else {
         this.piece = this.nextPiece;
         this.nextPiece = new _piece2.default();
@@ -572,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var button = document.getElementById("start-game").addEventListener("click", function () {
     game.reset();
     game.start();
-    document.getElementById('theme-song').play();
+    document.getElementById('song').play();
   });
 
   window.addEventListener('keydown', function (event) {

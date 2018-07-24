@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const button = document.getElementById("start-game").addEventListener("click", function() {
     game.reset();
     game.start();
-    document.getElementById('theme-song').play();
+    document.getElementById('song').play();
   });
 
 

@@ -223,6 +223,7 @@ class Game {
       document.getElementById('game-over').innerHTML = `<div>Game Over! Score: ${this.player.score}</div>`;
       document.getElementById('game-over').style.display = 'block';
       document.getElementById('game-over').style.opacity = 1;
+      document.getElementById('song').pause();
     } else {
       this.piece = this.nextPiece;
       this.nextPiece = new Piece();
