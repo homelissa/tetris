@@ -1,16 +1,21 @@
  @import url("https://fonts.googleapis.com/css?family=Lato:400,900");
 
+body.frame{
+  margin: 0 auto;
+}
+
+body {
+  background-color: rgb(252, 252, 252);
+}
 .frame {
+  margin: 0 auto;
   width: 690px;
   padding-top: 20px;
   padding-bottom: 30px;
   padding-left: 20px;
-  border: 4px solid lightgrey;
+  border: 4px solid rgb(0, 0, 0);
   border-radius: 6px;
   text-align: center;
-  margin-top: 30px;
-  margin-left: 30px;
-  margin-bottom: 30px;
 }
 
 
@@ -61,6 +66,7 @@
   outline: none;
   border: 3px;
   cursor: pointer;
+  box-shadow: 0 0 50px rgb(200, 200, 200);
 }
 
 
@@ -89,7 +95,7 @@
 }
 
 #canvas {
-  border: 2px solid #40d9ac;
+  border: 3px solid #40d9ac;
   border-radius: 3px;
 }
 

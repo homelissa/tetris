@@ -217,18 +217,10 @@ var Game = function () {
           this.player.clearedRows += 1;
           this.player.score += 30;
           this.player.setScore();
-          // this.removeRow(this.board.matrix, i);
           this.board.matrix.splice(i, 1);
           this.addNewRow();
         }
       }
-    }
-  }, {
-    key: 'removeRow',
-    value: function removeRow(arr, row) {
-      arr = arr.slice(0);
-      arr.splice(row - 1, 1);
-      return arr;
     }
   }, {
     key: 'addNewRow',
@@ -239,7 +231,6 @@ var Game = function () {
     key: 'fall',
     value: function fall() {
       this.piece.position.y += 1;
-      // this.drawGrid();
 
       if (this.collide()) {
         this.merge();
@@ -253,8 +244,6 @@ var Game = function () {
       while (!this.collide()) {
         this.piece.position.y++;
       }
-      // this.drawGrid();
-
 
       this.merge();
       this.clearRows();

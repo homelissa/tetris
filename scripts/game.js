@@ -51,17 +51,10 @@ class Game {
         this.player.clearedRows += 1;
         this.player.score += 30;
         this.player.setScore();
-        // this.removeRow(this.board.matrix, i);
         this.board.matrix.splice(i, 1);
         this.addNewRow();
       }
     }
-  }
-
-  removeRow(arr, row) {
-    arr = arr.slice(0);
-    arr.splice(row - 1, 1);
-    return arr;
   }
 
   addNewRow() {
@@ -70,7 +63,7 @@ class Game {
 
   fall() {
     this.piece.position.y += 1;
-    // this.drawGrid();
+   
 
     if (this.collide()) {
       this.merge();
@@ -84,7 +77,7 @@ class Game {
       this.piece.position.y++;
 
     }
-    // this.drawGrid();
+    
 
 
     this.merge();
