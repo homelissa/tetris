@@ -197,6 +197,7 @@ var Game = function () {
     value: function start() {
       this.player.score = 0;
       this.update();
+      document.getElementById('game-over').style.display = 'none';
     }
   }, {
     key: 'clear',
@@ -390,6 +391,9 @@ var Game = function () {
     value: function makeNewPiece() {
       if (this.piece.position.y <= 1) {
         this.gameOver = true;
+        document.getElementById('game-over').innerHTML = '<div>Game Over! Score: ' + this.player.score + '</div>';
+        document.getElementById('game-over').style.display = 'block';
+        document.getElementById('game-over').style.opacity = 1;
       } else {
         this.piece = this.nextPiece;
         this.nextPiece = new _piece2.default();

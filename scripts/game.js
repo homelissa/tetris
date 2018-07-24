@@ -36,6 +36,7 @@ class Game {
   start() {
     this.player.score = 0;
     this.update();
+    document.getElementById('game-over').style.display = 'none';
   }
 
   clear() {
@@ -63,7 +64,7 @@ class Game {
 
   fall() {
     this.piece.position.y += 1;
-   
+
 
     if (this.collide()) {
       this.merge();
@@ -77,7 +78,7 @@ class Game {
       this.piece.position.y++;
 
     }
-    
+
 
 
     this.merge();
@@ -219,6 +220,9 @@ class Game {
   makeNewPiece() {
     if (this.piece.position.y <= 1) {
       this.gameOver = true;
+      document.getElementById('game-over').innerHTML = `<div>Game Over! Score: ${this.player.score}</div>`;
+      document.getElementById('game-over').style.display = 'block';
+      document.getElementById('game-over').style.opacity = 1;
     } else {
       this.piece = this.nextPiece;
       this.nextPiece = new Piece();
