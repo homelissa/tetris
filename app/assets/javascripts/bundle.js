@@ -572,6 +572,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var button = document.getElementById("start-game").addEventListener("click", function () {
     game.reset();
     game.start();
+    document.getElementById('theme-song').play();
   });
 
   window.addEventListener('keydown', function (event) {

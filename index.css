@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,900");
+@import url('https://fonts.googleapis.com/css?family=Merienda');
+@import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light');
 
 body.frame{
  margin: 0 auto;
@@ -20,8 +22,8 @@ body {
 
 
 .header {
- font-size: 36px;
- font-family: 'Lato';
+ font-size: 45px;
+ font-family: 'Shadows Into Light';
  font-weight: bold;
 }
 
@@ -119,7 +121,7 @@ body {
 
 
 #game-over {
- font-family: 'Lato', cursive;
+ font-family: 'Merienda', cursive;
  font-size: 50px;
  position: absolute;
  top: 50%;
@@ -135,4 +137,8 @@ body {
  display: none;
  padding-top: 80px;
 
+}
+
+#theme-song {
+            
 }
