@@ -111,19 +111,38 @@ body {
 .instructions {
  font-family: 'Lato';
  font-size: 20px;
- padding-bottom: 20px;
  padding-left: 0px;
- margin-bottom: 20px;
 
 }
 
 .instructions li {
- font-size: 14px;
- text-align: left;
- margin-top: 10px;
- margin-left: 0px;
- width: 300px;
+  font-size: 14px;
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 0px;
+  width: 300px;
+
 }
+
+.controls {
+ font-family: 'Lato';
+ font-size: 20px;
+ padding-left: 0px;
+ list-style-type: none;
+ margin-top: 0px;
+ margin-bottom: 0px;
+ display: grid;
+ width: 200px;
+ height: 200px;
+ grid-template-columns: 150px 150px;
+
+}
+
+.controls li {
+  font-size: 16px;
+
+}
+
 
 
 
