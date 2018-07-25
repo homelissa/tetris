@@ -133,8 +133,9 @@ body {
  margin-bottom: 0px;
  display: grid;
  width: 200px;
- height: 200px;
- grid-template-columns: 150px 150px;
+ height: 125px;
+ grid-template-columns: 100px 100px;
+ grid-column-gap: 20px;
 
 }
 
