@@ -2,6 +2,21 @@
 @import url('https://fonts.googleapis.com/css?family=Merienda');
 @import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light');
 
+.hvr-grow {
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    transition-duration: 0.3s;
+    transition-property: transform;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+    transform: scale(1.1);
+}
+
 body.frame{
  margin: 0 auto;
  /* background-image: url("https://images.unsplash.com/photo-1494435619026-9e21da76be75?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=82ad60cc8864c40b72e81891fee6797b&auto=format&fit=crop&w=1500&q=80") */
